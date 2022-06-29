@@ -11,11 +11,11 @@ Questions exported from org-mode into a moodle xml file.
 :END:
 What is the capital of Germany?
 
-*** Munich                                                               :_33_33:
+*** Munich                                                               :_33_33333:
 
 Munich is the greatest city in Germany, but not the capital.
 
-*** Zurich                                                               :_33_33:
+*** Zurich                                                               :_33_33333:
 
 Zurich is not even in Germany??
 
@@ -23,7 +23,7 @@ Zurich is not even in Germany??
 
 Yes, let's face it, that is the Capital of Germany.
 
-*** Cologne                                                              :_33_33:
+*** Cologne                                                              :_33_33333:
 
 Totally crazy city, but not the capital.
 
@@ -32,7 +32,7 @@ Totally crazy city, but not the capital.
 :defaultgrade: 3.00
 :END:
 
-What are three advantages of Berlin being the capital of Germany?
+What are three advantages of <b>Berlin</b> being the capital of Germany?
 
 ** K-Prime
 

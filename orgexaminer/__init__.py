@@ -1,5 +1,6 @@
 import sys
 
+from lxml.etree import CDATA
 from orgparse import load
 from lxml import etree
 
@@ -14,6 +15,13 @@ def add_node_with_text(parent, name, text):
     subnode_text.text = text
 
 
+def add_html_node_with_text(parent, name, text):
+    """Add a node to the parent with text wrapped in a text node."""
+    node1 = etree.SubElement(parent, name)
+    subnode_text = etree.SubElement(node1, 'text', attrib={'format': 'html'})
+    subnode_text.text = CDATA(text)
+
+
 def add_node_with_content(xml_root, name, content):
     """Add a node and add the content as text to that node."""
     node2 = etree.SubElement(xml_root, name)
@@ -23,9 +31,9 @@ def add_node_with_content(xml_root, name, content):
 def add_node_answer(xml_root, fraction, text, feedback):
     """Create an answer node."""
     node3 = etree.SubElement(xml_root, 'answer', attrib={'fraction': fraction})
-    subnode_text = etree.SubElement(node3, 'text')
-    subnode_text.text = text
-    add_node_with_text(node3, 'feedback', feedback)
+    subnode_text = etree.SubElement(node3, 'text', attrib={'format': 'html'})
+    subnode_text.text = CDATA(text)
+    add_html_node_with_text(node3, 'feedback', feedback)
 
 
 def add_category(xml_root, name, description):
@@ -160,20 +168,20 @@ def add_kprime_to_xml(parent, question):
     add_node_with_text(kprime_node, 'scoringmethod', 'kprime')
 
     row1 = etree.SubElement(kprime_node, 'row', attrib={'number': '1'})
-    add_node_with_text(row1, 'optiontext', question.question_answers[0]['answer'])
-    add_node_with_text(row1, 'feedbacktext', question.question_answers[0]['feedback'])
+    add_html_node_with_text(row1, 'optiontext', question.question_answers[0]['answer'])
+    add_html_node_with_text(row1, 'feedbacktext', question.question_answers[0]['feedback'])
 
     row2 = etree.SubElement(kprime_node, 'row', attrib={'number': '2'})
-    add_node_with_text(row2, 'optiontext', question.question_answers[1]['answer'])
-    add_node_with_text(row2, 'feedbacktext', question.question_answers[1]['feedback'])
+    add_html_node_with_text(row2, 'optiontext', question.question_answers[1]['answer'])
+    add_html_node_with_text(row2, 'feedbacktext', question.question_answers[1]['feedback'])
 
     row3 = etree.SubElement(kprime_node, 'row', attrib={'number': '3'})
-    add_node_with_text(row3, 'optiontext', question.question_answers[2]['answer'])
-    add_node_with_text(row3, 'feedbacktext', question.question_answers[2]['feedback'])
+    add_html_node_with_text(row3, 'optiontext', question.question_answers[2]['answer'])
+    add_html_node_with_text(row3, 'feedbacktext', question.question_answers[2]['feedback'])
 
     row4 = etree.SubElement(kprime_node, 'row', attrib={'number': '4'})
-    add_node_with_text(row4, 'optiontext', question.question_answers[3]['answer'])
-    add_node_with_text(row4, 'feedbacktext', question.question_answers[3]['feedback'])
+    add_html_node_with_text(row4, 'optiontext', question.question_answers[3]['answer'])
+    add_html_node_with_text(row4, 'feedbacktext', question.question_answers[3]['feedback'])
 
     # The column 1 and 2 give the "Richtig" or "Falsch" titles
     col1 = etree.SubElement(kprime_node, 'column', attrib={'number': '1'})
@@ -193,7 +201,7 @@ def add_kprime_to_xml(parent, question):
 def add_text_to_xml(parent, question):
     text_node = etree.SubElement(parent, 'question', attrib={'type': question.question_type.value})
     add_node_with_text(text_node, 'name', question.question_name)
-    add_node_with_text(text_node, 'questiontext', question.question_text)
+    add_html_node_with_text(text_node, 'questiontext', question.question_text)
     add_node_with_text(text_node, 'generalfeedback', '')
     add_node_with_content(parent, 'defaultgrade', question.question_defaultgrade)
     add_node_with_content(parent, 'penalty', question.question_penalty)
@@ -214,7 +222,7 @@ def add_text_to_xml(parent, question):
 def add_mc_to_xml(parent, question):
     mc_node = etree.SubElement(parent, 'question', attrib={'type': question.question_type.value})
     add_node_with_text(mc_node, 'name', question.question_name)
-    add_node_with_text(mc_node, 'questiontext', question.question_text)
+    add_html_node_with_text(mc_node, 'questiontext', question.question_text)
     add_node_with_text(mc_node, 'generalfeedback', '')
 
     add_node_with_content(mc_node, 'defaultgrade', question.question_defaultgrade)
@@ -223,9 +231,9 @@ def add_mc_to_xml(parent, question):
     add_node_with_content(mc_node, 'shuffleanswers', question.question_shuffle_answers)
 
     # TODO what do I want to do with these? Make them as default but configurable via properties?
-    add_node_with_text(mc_node, 'correctfeedback', 'Die Antwort ist richtig!')
-    add_node_with_text(mc_node, 'partiallycorrectfeedback', 'Die Antwort ist teilweise richtig!')
-    add_node_with_text(mc_node, 'incorrectfeedback', 'Die Antwort ist falsch!')
+    add_html_node_with_text(mc_node, 'correctfeedback', 'Die Antwort ist richtig!')
+    add_html_node_with_text(mc_node, 'partiallycorrectfeedback', 'Die Antwort ist teilweise richtig!')
+    add_html_node_with_text(mc_node, 'incorrectfeedback', 'Die Antwort ist falsch!')
 
     for a in question.question_answers:
         add_node_answer(mc_node, str(a['fraction']), a['answer'], a['feedback'])
@@ -262,4 +270,4 @@ if __name__ == "__main__":
             print("Error parsing question: " + org_question.heading)
             sys.exit(1)
 
-    tree.write(sys.stdout.buffer, pretty_print=True)
+    tree.write('sample.xml', pretty_print=True)

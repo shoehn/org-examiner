@@ -77,7 +77,7 @@ class TestParser(unittest.TestCase):
 
         self.assertEqual(q.QuestionTypes.TEXT, q.question_type)
         self.assertEqual('Open question with text field', q.question_name)
-        self.assertEqual('What are three advantages of Berlin being the capital of Germany?', q.question_text)
+        self.assertEqual('What are three advantages of <b>Berlin</b> being the capital of Germany?', q.question_text)
         self.assertEqual('3.00', q.question_defaultgrade)
         self.assertEqual(None, q.question_penalty)
 
@@ -102,17 +102,17 @@ class TestParser(unittest.TestCase):
         self.assertEqual(4, len(q.question_answers))
 
         a = q.question_answers[0]  # Shortcut to the first answer
-        self.assertEqual(-33.33, a['fraction'])
+        self.assertEqual(-33.33333, a['fraction'])
         self.assertEqual('Munich', a['answer'])
         self.assertEqual('Munich is the greatest city in Germany, but not the capital.', a['feedback'])
 
         a = q.question_answers[1]  # Shortcut to the first answer
-        self.assertEqual(-33.33, a['fraction'])
+        self.assertEqual(-33.33333, a['fraction'])
         self.assertEqual('Zurich', a['answer'])
         self.assertEqual('Zurich is not even in Germany??', a['feedback'])
 
         a = q.question_answers[3]  # Shortcut to the first answer
-        self.assertEqual(-33.33, a['fraction'])
+        self.assertEqual(-33.33333, a['fraction'])
         self.assertEqual('Cologne', a['answer'])
         self.assertEqual('Totally crazy city, but not the capital.', a['feedback'])
 
