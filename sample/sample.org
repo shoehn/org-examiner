@@ -1,0 +1,45 @@
+
+* Moodle Quiz exported from org-mode
+Questions exported from org-mode into a moodle xml file.
+
+** Capitals of the world
+:PROPERTIES:
+:defaultgrade: 2.00
+:single: false
+:shuffleanswers: true
+:penalty:  0.33
+:END:
+What is the capital of Germany?
+
+*** Munich                                                               :_33_33:
+
+Munich is the greatest city in Germany, but not the capital.
+
+*** Zurich                                                               :_33_33:
+
+Zurich is not even in Germany??
+
+*** Berlin                                                               :100:
+
+Yes, let's face it, that is the Capital of Germany.
+
+*** Cologne                                                              :_33_33:
+
+Totally crazy city, but not the capital.
+
+** Open question with text field
+:PROPERTIES:
+:defaultgrade: 3.00
+:END:
+
+What are three advantages of Berlin being the capital of Germany?
+
+** K-Prime
+
+This question type has four options, that have to be answered to be true or false.
+
+*** This is the first option and it is true.                           :true:
+*** This is the second option and it is false.                        :false:
+*** Berlin is the capital of Germany                                   :true:
+*** Zurich is in Austria.                                             :false:
+Serious? You mix up Austria and Switzerland.
